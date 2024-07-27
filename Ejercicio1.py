@@ -13,11 +13,11 @@ while True:
         n2 = int(input('ingresa siguiente número: '))
         if op.lower() == 'suma':
             n1 += n2
-        if op.lower() == 'resta':
+        elif op.lower() == 'resta':
             n1 -= n2
-        if op.lower() == 'multi':
+        elif op.lower() == 'multi':
             n1 *= n2
-        if op.lower() == 'div':
+        elif op.lower() == 'div':
             n1 /= n2
         print(f'El resultado es {n1}.')
     else:
