@@ -44,6 +44,10 @@ app.geometry("350x600")
 app.configure(background="black")
 app.wm_title('Calculadora')
 
+#Entrada
+operacion = tk.Entry(app, font=("SanFrancisco", 20),fg="white", bd=10, insertwidth=2, width=20, borderwidth=0, bg="black")
+operacion.place(x=20, y=70)
+
 # Estilos botones
 ancho = 3
 alto = 1
