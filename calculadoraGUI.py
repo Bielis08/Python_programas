@@ -1,5 +1,41 @@
 import tkinter as tk
 
+#Operaciones
+def sumar(n1, n2):
+    resultado = n1 + n2
+    return resultado
+
+
+def restar(n1, n2):
+    resultado = n1 - n2
+    return resultado
+
+
+def multiplicacion(n1, n2):
+    resultado = n1 * n2
+    return resultado
+
+
+def division(n1, n2):
+    resultado = n1 / n2
+    return resultado
+
+
+def restante(n1, n2):
+    resultado = n1 % n2
+    return resultado
+
+
+def cambiarsigno(n):
+    resultado = -n
+    return resultado
+
+
+def borrar(operacion):
+    operacion -= operacion
+    return operacion
+
+
 # Creación de GUI
 app = tk.Tk()
 
