@@ -36,6 +36,40 @@ def borrar(operacion):
     return operacion
 
 
+def simplificar(operacion):
+    operaciones = ['*', '/', '%']
+    posicion = 0
+    for numero in operacion:
+        if numero in operaciones:
+            if numero == '*':
+                n1 = operacion[posicion - 1]
+                n2 = operacion[posicion + 1]
+                resultado = multiplicacion(n1, n2)
+                operacion.pop(posicion - 1)
+                operacion.pop(posicion)
+                operacion.pop(posicion - 1)
+                operacion.insert(posicion - 1, resultado)
+            elif numero == '/':
+                n1 = operacion[posicion - 1]
+                n2 = operacion[posicion + 1]
+                resultado = division(n1, n2)
+                operacion.pop(posicion - 1)
+                operacion.pop(posicion)
+                operacion.pop(posicion - 1)
+                operacion.insert(posicion - 1, resultado)
+            elif numero == '%':
+                n1 = operacion[posicion - 1]
+                n2 = operacion[posicion + 1]
+                resultado = restante(n1, n2)
+                operacion.pop(posicion - 1)
+                operacion.pop(posicion)
+                operacion.pop(posicion - 1)
+                operacion.insert(posicion - 1, resultado)
+        posicion += 1
+    return operacion
+
+
+
 def calcular(entrada):
     # Convertir entrada a lista con numeros convertidos a int
     operaciones = ['+', '-', '*', '/', '%']
@@ -53,6 +87,7 @@ def calcular(entrada):
     numeroactual = int(numeroactual)
     operacion.append(numeroactual)
     # Empezar a calcular
+    operacion = simplificar(operacion)
     resultado = 0
     while not len(operacion) == 0:
         if len(operacion) == 1:
