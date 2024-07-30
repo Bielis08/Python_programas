@@ -93,17 +93,21 @@ def calcular(entrada):
         if len(operacion) == 1:
             resultado += operacion[0]
             return resultado
-        elif operacion[1] == '+':
-            resultado += sumar(operacion[0], operacion[2])
+        elif len(operacion) == 2:
             operacion.pop(0)
+            operacion.pop(0)
+        if operacion[1] == '+':
+            if operacion[1] == '+':
+                resultado += sumar(operacion[0], operacion[2])
+                operacion.pop(0)
+        elif operacion[1] == '-':
+            if operacion[1] == '-':
+                resultado += restar(operacion[0], operacion[2])
+                operacion.pop(0)
         else:
-            if len(operacion) == 2:
-                operacion.pop(0)
-                operacion.pop(0)
-            else:
-                operacion.pop(0)
-                operacion.pop(0)
-                operacion.pop(0)
+            operacion.pop(0)
+            operacion.pop(0)
+            operacion.pop(0)
     return resultado
                 
 
