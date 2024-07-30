@@ -77,20 +77,22 @@ def simplificar(operacion):
 
 
 def calcular(entrada):
-    # Convertir entrada a lista con numeros convertidos a int
+    # Convertir entrada a lista con numeros convertidos a float
     operaciones = ['+', '-', '*', '/', '%']
     operacion = []
     numeroactual = ""
     for numero in entrada:
         if numero in operaciones:
             if numeroactual != "":
-                numeroactual = int(numeroactual)
+                numeroactual = float(numeroactual)
                 operacion.append(numeroactual)
                 operacion.append(numero)
             numeroactual = ""
+        elif numero == ",":
+            numeroactual = numeroactual + "."
         elif numero != " ":
             numeroactual = numeroactual + numero
-    numeroactual = int(numeroactual)
+    numeroactual = float(numeroactual)
     operacion.append(numeroactual)
     # Empezar a calcular
     operacion = simplificar(operacion)
