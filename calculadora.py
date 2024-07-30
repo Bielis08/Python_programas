@@ -11,12 +11,12 @@ def restar(n1, n2):
     return resultado
 
 
-def multiplicacion(n1, n2):
+def multiplicar(n1, n2):
     resultado = n1 * n2
     return resultado
 
 
-def division(n1, n2):
+def dividir(n1, n2):
     if n2 != 0:
         resultado = n1 / n2
     else:
@@ -42,12 +42,14 @@ def borrar(operacion):
 def simplificar(operacion):
     operaciones = ['*', '/', '%']
     posicion = 0
+    # Buscar operaciones de alta prioridad
     for numero in operacion:
         if numero in operaciones:
             if numero == '*':
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
-                resultado = multiplicacion(n1, n2)
+                resultado = multiplicar(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
@@ -55,7 +57,8 @@ def simplificar(operacion):
             elif numero == '/':
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
-                resultado = division(n1, n2)
+                resultado = dividir(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
@@ -67,6 +70,7 @@ def simplificar(operacion):
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
                 resultado = restante(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
@@ -88,6 +92,7 @@ def calcular(entrada):
                 operacion.append(numeroactual)
                 operacion.append(numero)
             numeroactual = ""
+        # Quita imperfecciones de la entrada del usuario
         elif numero == ",":
             numeroactual = numeroactual + "."
         elif numero != " ":
