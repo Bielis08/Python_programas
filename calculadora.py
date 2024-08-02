@@ -11,13 +11,16 @@ def restar(n1, n2):
     return resultado
 
 
-def multiplicacion(n1, n2):
+def multiplicar(n1, n2):
     resultado = n1 * n2
     return resultado
 
 
-def division(n1, n2):
-    resultado = n1 / n2
+def dividir(n1, n2):
+    if n2 != 0:
+        resultado = n1 / n2
+    else:
+        return -1
     return resultado
 
 
@@ -39,12 +42,14 @@ def borrar(operacion):
 def simplificar(operacion):
     operaciones = ['*', '/', '%']
     posicion = 0
+    # Buscar operaciones de alta prioridad
     for numero in operacion:
         if numero in operaciones:
             if numero == '*':
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
-                resultado = multiplicacion(n1, n2)
+                resultado = multiplicar(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
@@ -52,15 +57,20 @@ def simplificar(operacion):
             elif numero == '/':
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
-                resultado = division(n1, n2)
+                resultado = dividir(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
                 operacion.insert(posicion - 1, resultado)
+                if resultado == -1:
+                    mensaje = "No se puede dividir entre 0!"
+                    return mensaje
             elif numero == '%':
                 n1 = operacion[posicion - 1]
                 n2 = operacion[posicion + 1]
                 resultado = restante(n1, n2)
+                # Eliminar operacion y dejar el resultado en la lista de operacion
                 operacion.pop(posicion - 1)
                 operacion.pop(posicion)
                 operacion.pop(posicion - 1)
@@ -71,51 +81,65 @@ def simplificar(operacion):
 
 
 def calcular(entrada):
-    # Convertir entrada a lista con numeros convertidos a int
+    # Convertir entrada a lista con numeros convertidos a float
     operaciones = ['+', '-', '*', '/', '%']
     operacion = []
     numeroactual = ""
     for numero in entrada:
         if numero in operaciones:
             if numeroactual != "":
-                numeroactual = int(numeroactual)
+                numeroactual = float(numeroactual)
                 operacion.append(numeroactual)
                 operacion.append(numero)
             numeroactual = ""
-        else:
+        # Quita imperfecciones de la entrada del usuario
+        elif numero == ",":
+            numeroactual = numeroactual + "."
+        elif numero != " ":
             numeroactual = numeroactual + numero
-    numeroactual = int(numeroactual)
+    numeroactual = float(numeroactual)
     operacion.append(numeroactual)
     # Empezar a calcular
     operacion = simplificar(operacion)
-    resultado = 0
-    while not len(operacion) == 0:
-        if len(operacion) == 1:
-            resultado += operacion[0]
-            return resultado
-        elif len(operacion) == 2:
-            operacion.pop(0)
-            operacion.pop(0)
-        if operacion[1] == '+':
-            if operacion[1] == '+':
-                resultado += sumar(operacion[0], operacion[2])
+    if operacion == "No se puede dividir entre 0!":
+        return operacion
+    else:
+        resultado = 0
+        while not len(operacion) == 0:
+            if len(operacion) == 1:
+                resultado += operacion[0]
+                return resultado
+            elif len(operacion) == 2:
                 operacion.pop(0)
-        elif operacion[1] == '-':
-            if operacion[1] == '-':
-                resultado += restar(operacion[0], operacion[2])
                 operacion.pop(0)
+            else:
+                if operacion[1] == '+':
+                    resultado += sumar(operacion[0], operacion[2])
+                    operacion.pop(0)
+                elif operacion[1] == '-':
+                    resultado += restar(operacion[0], operacion[2])
+                    operacion.pop(0)
+        return resultado
+
+
+def comprobar():
+    if entrada.lower() != 'salir':
+        resultado = calcular(entrada)
+        if resultado != "No se puede dividir entre 0!":
+            print(f'El resultado de la operación es: {resultado}')
         else:
-            operacion.pop(0)
-            operacion.pop(0)
-            operacion.pop(0)
-    return resultado
-                
+            print(resultado)
+    else:
+        return -1
+
+
 
 # Calculadora
+print('Bienvenido a la calculadora. Para salir escriba "Salir"')
 while True:
     entrada = input("Introduzca la operación: ")
-    resultado = calcular(entrada)
-    print(f'El resultado de la operación es: {resultado}')
+    if comprobar() == -1:
+        break
 
 
 # # Creación de GUI
@@ -127,7 +151,7 @@ while True:
 # app.wm_title('Calculadora')
 
 # #Entrada
-# operacion = tk.Entry(app, font=("SanFrancisco", 20),fg="white", bd=10, insertwidth=2, width=20, borderwidth=0, bg="black")
+# operacion = tk.Entry(app, font=("SanFrancisco", 20),fg="white", bd=10, insertwidth=2, width=20, borderwidth=0, bg="gray")
 # operacion.place(x=20, y=70)
 
 # # Estilos botones
